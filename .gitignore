@@ -35,4 +35,4 @@ build/
 
 # Project
 log.txt
-*.json
+album-reviews.json
