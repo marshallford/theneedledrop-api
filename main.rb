@@ -4,14 +4,16 @@ require 'bundler/setup'
 # require your gems as usual
 require 'httparty'
 require 'json'
-require 'youtube_it'
-require 'deep_merge'
+require 'yt'
+require 'deep_merger'
 
 # setup youtube api
 file = File.read('config.json')
 fileHash = JSON.parse(file)
-ytDevKey = fileHash['youtubeDevKey']
-client = YouTubeIt::Client.new(:dev_key => ytDevKey)
+youtubeApiKey = fileHash['youtubeApiKey']
+Yt.configure do |config|
+  config.api_key = youtubeApiKey
+end
 
 # vars
 artistTitle= []
@@ -20,7 +22,8 @@ videoURL = []
 albumReviewVideos = []
 
 # array of videos
-videos = client.videos_by(:user => 'theneedledrop', :per_page => 50).videos
+channel = Yt::Channel.new url: 'youtube.com/theneedledrop'
+videos = channel.videos.first(100)
 
 # remove videos that are not album review from array
 counter = 0
@@ -37,7 +40,7 @@ albumReviewVideos.each_with_index do |video, index|
 	tempTitle = video.title.strip
 	artistTitle[index] = video.title.split("-")[0].strip
 	albumTitle[index] = video.title.to_s.split("-")[1].strip.split("ALBUM REVIEW")[0].strip
-	videoURL[index] = video.player_url.split("&feature=youtube_gdata_player")[0].strip
+	videoURL[index] = "https://www.youtube.com/watch?v=" + video.id
 end
 
 # test output
@@ -50,7 +53,8 @@ hash = { :resultCount => albumTitle.length.to_s , :lastUpdated => Time.new.utc.t
 
 # create hash
 albumTitle.each_with_index do |item, index|
-	hash = hash.deep_merge({:results => [ {:artistTitle => artistTitle[index], :albumTitle => albumTitle[index], :youtubeURL => videoURL[index]} ]})
+	source = {:results => [ {:artistTitle => artistTitle[index], :albumTitle => albumTitle[index], :youtubeURL => videoURL[index]} ]}
+	DeepMerger.deep_merge!(hash, source)
 end
 
 # save hash as json to file

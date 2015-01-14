@@ -8,9 +8,9 @@ I wrote this API for my own purposes and to practice programming. If you see any
 
 1. clone project
 2. run `bundle` to get dependencies
-3. add your youtube developer key to `config.json`
+3. add your [Google Public API Access key](https://github.com/Fullscreen/yt#configuring-your-app) to `config.json`
 4. run `ruby main.rb`
-5. see outputted json files
+5. see outputted json file
 
 # TO DO
 

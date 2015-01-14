@@ -3,5 +3,5 @@ source "https://rubygems.org"
 
 gem 'httparty'
 gem 'json'
-gem 'youtube_it'
-gem 'deep_merge'
+gem 'yt'
+gem 'deep_merger'
