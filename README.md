@@ -1,6 +1,6 @@
 # theneedledrop-api
 
-API for getting artist and album data from theneedledrop's album review videos.
+API for getting artist and album data from theneedledrop's album review videos. You can check out a demo of this API in action [here](http://api.marshallford.me).
 
 I wrote this API for my own purposes and to practice programming. If you see anything that needs fixing or improved feel free to create an issue or pull request.
 
